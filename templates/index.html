@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Price Prediction</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #141E30, #243B55);
+    color: #fff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container Styling */
+.container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    margin: 50px auto;
+    width: 50%;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+/* Title Styling */
+h1 {
+    color: #f7c32e;
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Label Styling */
+label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+    color: #fff;
+}
+
+/* Input Styling */
+input {
+    padding: 10px;
+    margin-top: 5px;
+    width: 80%;
+    border: 2px solid #f7c32e;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 16px;
+}
+
+input::placeholder {
+    color: #ddd;
+}
+
+/* Button Styling */
+button {
+    margin-top: 20px;
+    padding: 12px;
+    width: 60%;
+    background-color: #f7c32e;
+    color: #141E30;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #ffd700;
+}
+
+/* Result Styling */
+#result {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #f7c32e;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 80%;
+    }
+
+    input {
+        width: 90%;
+    }
+
+    button {
+        width: 80%;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mobile Price Prediction</h1>
+        <form id="predict-form">
+            <label for="battery_power">Battery Power:</label>
+            <input type="text" id="battery_power" name="battery_power" required><br>
+            
+            <label for="blue">Bluetooth (0/1):</label>
+            <input type="text" id="blue" name="blue" required><br>
+            
+            <label for="clock_speed">Clock Speed:</label>
+            <input type="text" id="clock_speed" name="clock_speed" required><br>
+            
+            <label for="dual_sim">Dual SIM (0/1):</label>
+            <input type="text" id="dual_sim" name="dual_sim" required><br>
+            
+            <label for="fc">Front Camera (MP):</label>
+            <input type="text" id="fc" name="fc" required><br>
+            
+            <label for="four_g">4G (0/1):</label>
+            <input type="text" id="four_g" name="four_g" required><br>
+            
+            <label for="int_memory">Internal Memory (GB):</label>
+            <input type="text" id="int_memory" name="int_memory" required><br>
+            
+            <label for="m_dep">Mobile Depth (cm):</label>
+            <input type="text" id="m_dep" name="m_dep" required><br>
+            
+            <label for="mobile_wt">Mobile Weight (gm):</label>
+            <input type="text" id="mobile_wt" name="mobile_wt" required><br>
+            
+            <label for="n_cores">Processor Cores:</label>
+            <input type="text" id="n_cores" name="n_cores" required><br>
+            
+            <label for="pc">Primary Camera (MP):</label>
+            <input type="text" id="pc" name="pc" required><br>
+            
+            <label for="px_height">Pixel Resolution Height:</label>
+            <input type="text" id="px_height" name="px_height" required><br>
+            
+            <label for="px_width">Pixel Resolution Width:</label>
+            <input type="text" id="px_width" name="px_width" required><br>
+            
+            <label for="ram">RAM (MB):</label>
+            <input type="text" id="ram" name="ram" required><br>
+            
+            <label for="sc_h">Screen Height (cm):</label>
+            <input type="text" id="sc_h" name="sc_h" required><br>
+            
+            <label for="sc_w">Screen Width (cm):</label>
+            <input type="text" id="sc_w" name="sc_w" required><br>
+            
+            <label for="talk_time">Talk Time (hours):</label>
+            <input type="text" id="talk_time" name="talk_time" required><br>
+            
+            <label for="three_g">3G (0/1):</label>
+            <input type="text" id="three_g" name="three_g" required><br>
+            
+            <label for="touch_screen">Touch Screen (0/1):</label>
+            <input type="text" id="touch_screen" name="touch_screen" required><br>
+            
+            <label for="wifi">WiFi (0/1):</label>
+            <input type="text" id="wifi" name="wifi" required><br>
+            
+            <button type="submit">Predict</button>
+        </form>
+        <p id="result"></p>
+    </div>
+    
+    <script>
+        document.getElementById('predict-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    let formData = {
+        battery_power: parseInt(document.getElementById('battery_power').value),
+        blue: parseInt(document.getElementById('blue').value),
+        clock_speed: parseFloat(document.getElementById('clock_speed').value),
+        dual_sim: parseInt(document.getElementById('dual_sim').value),
+        fc: parseInt(document.getElementById('fc').value),
+        four_g: parseInt(document.getElementById('four_g').value),
+        int_memory: parseInt(document.getElementById('int_memory').value),
+        m_dep: parseFloat(document.getElementById('m_dep').value),
+        mobile_wt: parseInt(document.getElementById('mobile_wt').value),
+        n_cores: parseInt(document.getElementById('n_cores').value),
+        pc: parseInt(document.getElementById('pc').value),
+        px_height: parseInt(document.getElementById('px_height').value),
+        px_width: parseInt(document.getElementById('px_width').value),
+        ram: parseInt(document.getElementById('ram').value),
+        sc_h: parseInt(document.getElementById('sc_h').value),
+        sc_w: parseInt(document.getElementById('sc_w').value),
+        talk_time: parseInt(document.getElementById('talk_time').value),
+        three_g: parseInt(document.getElementById('three_g').value),
+        touch_screen: parseInt(document.getElementById('touch_screen').value),
+        wifi: parseInt(document.getElementById('wifi').value)
+    };
+
+    fetch('/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.price_range !== undefined) {
+            document.getElementById('result').textContent = 'Predicted Price Range: ' + data.price_range;
+        } else {
+            document.getElementById('result').textContent = 'Error: ' + data.error;
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+    </script>
+</body>
+</html>
